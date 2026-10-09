@@ -128,6 +128,17 @@ namespace
             return false;
         }
     }
+
+    // mod-playerbots renamed its config keys from AiPlayerbot.* to
+    // Playerbots.*; read whichever one the installed version provides.
+    template <typename T>
+    T GetPlayerbotOption(std::string const& name, T const& def)
+    {
+        std::string key = "Playerbots." + name;
+        if (sConfigMgr->GetKeysByString(key).empty())
+            key = "AiPlayerbot." + name;
+        return sConfigMgr->GetOption<T>(key, def);
+    }
 }
 
 namespace CityLife
@@ -229,9 +240,8 @@ namespace CityLife
         if (!_usePlayerbotConfig)
             return;
 
-        std::string configuredPrefix = sConfigMgr->GetOption<std::string>(
-            "AiPlayerbot.RandomBotAccountPrefix", "rndbot");
-        uint32 loginDelay = sConfigMgr->GetOption<uint32>("AiPlayerbot.DisabledWithoutRealPlayerLoginDelay", 30);
+        std::string configuredPrefix = GetPlayerbotOption<std::string>("RandomBotAccountPrefix", "rndbot");
+        uint32 loginDelay = GetPlayerbotOption<uint32>("DisabledWithoutRealPlayerLoginDelay", 30);
         std::string prefix = Lower(_botAccountPrefix);
         if (prefix.empty() || prefix == "auto" || prefix == "playerbot" || prefix == "playerbots")
             _botAccountPrefix = configuredPrefix;

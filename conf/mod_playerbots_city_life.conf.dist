@@ -23,7 +23,7 @@ CityLife.TickSeconds = 10
 # Read the random-bot account prefix and login delay from mod-playerbots.
 CityLife.Bots.UsePlayerbotConfig = 1
 
-# "auto" uses AiPlayerbot.RandomBotAccountPrefix.
+# "auto" uses Playerbots.RandomBotAccountPrefix (AiPlayerbot.* on older playerbots).
 CityLife.Bots.AccountPrefix = "auto"
 
 # Optional account-id range. 0/0 disables range filtering.

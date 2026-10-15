@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Read mod-playerbots' renamed `Playerbots.*` config keys (account prefix, login delay), falling back to `AiPlayerbot.*` on older playerbots.
+- Skip real players before the bot-account check, so resident selection never queries the login database for them.
 
 ## 0.2.0 - 2026-09-12
 

@@ -391,6 +391,10 @@ namespace CityLife
     {
         if (!player || !player->GetSession() || !player->IsInWorld() || player->IsBeingTeleported())
             return false;
+        // Real players are never residents; rejecting them first keeps their accounts
+        // out of IsConfiguredBotAccount's login database lookup.
+        if (!player->GetSession()->IsHeadless())
+            return false;
         if (!sRandomPlayerbotMgr.IsRandomBot(player) &&
             !IsConfiguredBotAccount(player->GetSession()->GetAccountId()))
             return false;
@@ -416,6 +420,8 @@ namespace CityLife
     bool Manager::IsResidentUsable(Player* player) const
     {
         if (!player || !player->GetSession() || !player->IsInWorld())
+            return false;
+        if (!player->GetSession()->IsHeadless())
             return false;
         if (!sRandomPlayerbotMgr.IsRandomBot(player) &&
             !const_cast<Manager*>(this)->IsConfiguredBotAccount(player->GetSession()->GetAccountId()))

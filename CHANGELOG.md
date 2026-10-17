@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased - 2026-10-17
+
+- Fixed relocation being mistaken for leash escape and interrupted by recovery teleports (issue #1).
+- Validate randomized destination heights and reject unsafe straight-line/pathfinding fallbacks.
+- Add `.citylife races [hub|all]` to compare resident and available-candidate race distributions.
+
 ## 0.2.0 - 2026-09-12
 
 - Added separate Alliance and Horde Wintergrasp hubs with 40 bots per faction.

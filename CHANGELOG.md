@@ -1,9 +1,12 @@
 # Changelog
 
-## Unreleased
+## Unreleased - 2026-10-17
 
 - Read mod-playerbots' renamed `Playerbots.*` config keys (account prefix, login delay), falling back to `AiPlayerbot.*` on older playerbots.
 - Skip real players before the bot-account check, so resident selection never queries the login database for them.
+- Fixed relocation being mistaken for leash escape and interrupted by recovery teleports (issue #1).
+- Validate randomized destination heights and reject unsafe straight-line/pathfinding fallbacks.
+- Add `.citylife races [hub|all]` to compare resident and available-candidate race distributions.
 
 ## 0.2.0 - 2026-09-12
 

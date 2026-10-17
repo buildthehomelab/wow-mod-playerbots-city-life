@@ -42,7 +42,7 @@ namespace CityLife
         bool IsCandidate(Player* player);
         bool IsResident(uint32 guidLow) const;
         bool IsResidentUsable(Player* player) const;
-        std::vector<BotCandidate> LoadCandidates(Hub const& hub);
+        std::vector<BotCandidate> LoadCandidates(Hub const& hub, bool applyLimit = true);
 
         Hub* FindHub(uint32 hubId);
         Hub* FindHub(std::string const& name);
@@ -59,15 +59,18 @@ namespace CityLife
         void MaintainPopulation();
         void MaintainResidents();
         void RelocateResident(Resident& resident, Hub const& hub);
-        void AssignSpot(Resident& resident, Hub const& hub, Spot const& spot, bool allowStationary);
+        bool AssignSpot(Resident& resident, Hub const& hub, Spot const& spot, bool allowStationary);
+        bool StartMovement(Player* player, Resident& resident) const;
+        void FinishMovement(Player* player, Resident& resident, bool arrived) const;
 
         void ApplyCityStrategies(Player* player) const;
         void SetStayPosition(Player* player, Resident const& resident) const;
         void ClearCityStrategies(Player* player) const;
-        void MoveBot(Player* player, uint32 mapId, float x, float y, float z, float o, bool teleport) const;
+        bool TeleportBot(Player* player, uint32 mapId, float x, float y, float z, float o) const;
         void TryEmote(Player* player) const;
 
         void PrintStatus(ChatHandler* handler) const;
+        void PrintRaceDistribution(ChatHandler* handler, Hub const* hub);
         void PrintHelp(ChatHandler* handler) const;
         bool HandleHubCommand(ChatHandler* handler, std::vector<std::string> const& args);
         bool HandleSpotCommand(ChatHandler* handler, std::vector<std::string> const& args);

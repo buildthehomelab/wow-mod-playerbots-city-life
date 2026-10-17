@@ -1,5 +1,24 @@
 # City Life
 
+Created by **iCore**.
+
+## Movement bug fixes — issue #1
+
+Fixed City Life movement handling behind town-entrance rubber-banding, straight-line shortcuts and
+mid-air running reported in [issue #1](https://github.com/vrzgames/mod-playerbots-city-life/issues/1).
+
+- Normal relocation is no longer interrupted by distance-based recovery teleports.
+- Randomized destinations are checked against ground height and the intended vertical layer.
+- Roaming uses validated, non-forced navmesh paths; unsafe or missing paths are rejected instead
+  of falling back to a straight line through obstacles or the air.
+- Interrupted movement is retried with bounded recovery rather than a repeated teleport loop.
+
+Rebuild and restart worldserver to use the fix. Valid map, VMap and MMap data are required, with
+`MoveMaps.Enable = 1`; this change does not generate or repair navigation data. In-game confirmation
+at the affected entrances is still required before closing the issue.
+
+## About
+
 City Life populates capitals, towns and popular social hubs with configurable AzerothCore
 Playerbots. It is a visual population module: residents gather near auction houses, banks,
 mailboxes, flight masters and public squares, but the module does not trade or manipulate the
@@ -113,6 +132,7 @@ all configurable under `CityLife.Behaviour`.
 
 ```text
 .citylife status
+.citylife races [hub|all]
 .citylife reload
 .citylife hub list
 .citylife hub add <name> <alliance|horde|any> <minLevel> <maxLevel> <population> [priority]
@@ -132,16 +152,32 @@ updates it, which makes in-game coordinate tuning quick.
 precedence. Use `.citylife reload` after direct database edits; GM commands reload data
 automatically.
 
+## Race distribution diagnostics
+
+Use `.citylife races Stormwind` for one hub or `.citylife races all` (also the default) for all hubs.
+The command reports each race's resident count and percentage alongside the currently eligible,
+online, unreserved candidate count and percentage. Candidate counts are taken before
+`CityLife.Bots.QueryLimit`; global results count each candidate once across enabled hubs with spots.
+A named hub uses its own faction, level and safety filters, even if that hub is disabled.
+
+Residents are already reserved, so they are not included in the available-candidate column. These
+numbers are not the complete server-wide online population. City Life does not create characters,
+prefer Dwarves or force equal race quotas; its population depends on the eligible Playerbots pool.
+This diagnostic helps investigate the reported Dwarf-heavy population without changing selection.
+The command is GM/console-only and does not alter bot behavior or consume recruitment randomness.
+
 ## Behaviour and safety
 
-Residents receive a non-combat `stay` strategy and have grinding, travel and autonomous RPG
-movement disabled while reserved. They can still defend themselves if attacked. City Life never
+City Life owns residents' non-combat relocation and idle anchors while reserved. Competing stay,
+follow, grinding, loot/gather, travel and autonomous RPG movement are disabled; combat strategies
+are not replaced. Residents can still defend themselves if attacked. City Life never
 interrupts combat and never borrows bots that are dead, grouped, in an instance, in a battleground,
 in flight, controlled by a real player or already using the Playerbots duel strategy.
 
 The random-playerbot teleport timer is held while a bot is a resident. When released, the bot's
 normal strategies and random teleport schedule are restored. By default it is also returned to the
-position from which City Life borrowed it.
+position from which City Life borrowed it, but only if that destination passes the same safety
+checks. A refused return leaves the released bot at its current position without a forced fallback.
 
 City Life and current versions of `mod-playerbots-pvp-life` use a shared in-memory bot reservation
 registry, so the two modules never borrow the same bot. The registry uses only public module code;

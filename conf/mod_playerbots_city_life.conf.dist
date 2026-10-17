@@ -73,8 +73,8 @@ CityLife.Behaviour.Relocate = 1
 CityLife.Behaviour.RelocateMinSeconds = 180
 CityLife.Behaviour.RelocateMaxSeconds = 600
 
-# Return an idle resident to its assigned spot if another AI moved it farther than this.
-# Combat is never interrupted by the leash.
+# Drift-recovery distance in yards after arrival; normal relocation is never a leash violation.
+# Recovery uses a validated walking path, not a teleport. Combat is never interrupted.
 CityLife.Behaviour.LeashRadius = 35
 
 CityLife.Behaviour.Emotes = 1
@@ -93,6 +93,7 @@ CityLife.Behaviour.StaticServiceHubs = "Stormwind,Orgrimmar"
 CityLife.Behaviour.StaticServiceCategories = "auction,bank"
 
 # City bots stay defensive if attacked but do not grind, travel or wander away on their own.
+# City Life suppresses competing non-combat movement (including stay's return action) while reserved.
 CityLife.Strategies.NonCombat = "+stay,-follow,-passive,-grind,-rpg,-travel,-duel,-pvp"
 
 ###################################################################################################

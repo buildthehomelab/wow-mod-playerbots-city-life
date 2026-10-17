@@ -80,6 +80,15 @@ namespace CityLife
         uint32 NextMoveAt = 0;
         uint32 NextEmoteAt = 0;
         uint32 NextReservationRefreshAt = 0;
+        uint32 MovementSplineId = 0;
+        uint32 MovementDeadlineAt = 0;
+        uint32 LastProgressAt = 0;
+        uint32 RetryMoveAt = 0;
+        float ProgressX = 0.0f;
+        float ProgressY = 0.0f;
+        float ProgressZ = 0.0f;
+        uint8 MovementRetries = 0;
+        bool Travelling = false;
         uint32 ReleaseAt = 0;
         bool Stationary = false;
     };

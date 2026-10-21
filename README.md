@@ -62,7 +62,11 @@ The bundled faction-specific Wintergrasp hubs maintain their own reserved popula
 
 ## Installation
 
-1. Copy `mod-playerbots-city-life` into the core's `modules` directory.
+1. Clone the module into the core's `modules` directory:
+   ```bash
+   cd azerothcore-wotlk/modules
+   git clone https://github.com/buildthehomelab/wow-mod-playerbots-city-life.git mod-playerbots-city-life
+   ```
 2. Apply `data/sql/manual/world_city_life.sql` to the WORLD database.
 3. Copy `conf/mod_playerbots_city_life.conf.dist` to the generated worldserver configuration area
    in the same way as other AzerothCore module configuration files.
@@ -196,3 +200,7 @@ City Life intentionally does not:
 
 Its job is focused: make important World of Warcraft locations look inhabited without altering the
 server economy.
+
+## Credits
+
+Originally written by [chenyifeiai](https://github.com/chenyifeiai/mod-playerbots-city-life); this repository is a fork of it.

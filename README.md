@@ -169,7 +169,7 @@ registry, so the two modules never borrow the same bot. The registry uses only p
 there is no compatibility patch to apply and no terminal command is required. Copy both current
 module folders into `modules`, configure them and build AzerothCore normally.
 
-Not yet confirmed in a game client: the town-entrance movement fixes in the changelog (issue #1).
+Not yet confirmed in a game client: the town-entrance movement fixes in the changelog ([issue #1](https://github.com/vrzgames/mod-playerbots-city-life/issues/1)).
 
 ## Scope
 

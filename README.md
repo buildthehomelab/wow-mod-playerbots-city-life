@@ -2,21 +2,6 @@
 
 Created by **iCore**.
 
-## Movement bug fixes — issue #1
-
-Fixed City Life movement handling behind town-entrance rubber-banding, straight-line shortcuts and
-mid-air running reported in [issue #1](https://github.com/vrzgames/mod-playerbots-city-life/issues/1).
-
-- Normal relocation is no longer interrupted by distance-based recovery teleports.
-- Randomized destinations are checked against ground height and the intended vertical layer.
-- Roaming uses validated, non-forced navmesh paths; unsafe or missing paths are rejected instead
-  of falling back to a straight line through obstacles or the air.
-- Interrupted movement is retried with bounded recovery rather than a repeated teleport loop.
-
-Rebuild and restart worldserver to use the fix. Valid map, VMap and MMap data are required, with
-`MoveMaps.Enable = 1`; this change does not generate or repair navigation data. In-game confirmation
-at the affected entrances is still required before closing the issue.
-
 ## About
 
 City Life populates capitals, towns and popular social hubs with configurable AzerothCore
@@ -52,6 +37,7 @@ Bundled hubs:
 - AzerothCore `azerothcore-wotlk` Playerbot branch
 - `mod-playerbots`
 - A configured pool of online random playerbots
+- Valid map, VMap and MMap data, with `MoveMaps.Enable = 1`. Roaming uses navmesh paths and does not generate or repair navigation data.
 
 City Life borrows already-online random bots. It does not create characters and does not increase
 the number of random bots logged in by `mod-playerbots`. Ensure the Playerbots population is large
@@ -163,7 +149,6 @@ A named hub uses its own faction, level and safety filters, even if that hub is 
 Residents are already reserved, so they are not included in the available-candidate column. These
 numbers are not the complete server-wide online population. City Life does not create characters,
 prefer Dwarves or force equal race quotas; its population depends on the eligible Playerbots pool.
-This diagnostic helps investigate the reported Dwarf-heavy population without changing selection.
 The command is GM/console-only and does not alter bot behavior or consume recruitment randomness.
 
 ## Behaviour and safety
@@ -183,6 +168,8 @@ City Life and current versions of `mod-playerbots-pvp-life` use a shared in-memo
 registry, so the two modules never borrow the same bot. The registry uses only public module code;
 there is no compatibility patch to apply and no terminal command is required. Copy both current
 module folders into `modules`, configure them and build AzerothCore normally.
+
+Not yet confirmed in a game client: the town-entrance movement fixes in the changelog ([issue #1](https://github.com/vrzgames/mod-playerbots-city-life/issues/1)).
 
 ## Scope
 
